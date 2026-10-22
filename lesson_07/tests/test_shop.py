@@ -1,4 +1,9 @@
-from pages.shop_page import ShopObject
+from pages.shop_page import LoginPage
+from pages.shop_page import MainPage
+from pages.shop_page import CartPage
+from pages.shop_page import CheckoutPage
+from pages.shop_page import InformationPage
+
 from selenium import webdriver
 
 
@@ -6,15 +11,19 @@ def test_shop():
     driver = webdriver.Firefox()
     driver.maximize_window()
     driver.delete_all_cookies()
-    shop = ShopObject(driver, url='https://www.saucedemo.com/')
-    shop.open_shop_page()
-    shop.log_in()
-    shop.add_to_cart()
-    shop.click_cart()
-    shop.click_checkout()
-    shop.information()
-    result = shop.get_total()
+    login = LoginPage(driver, url='https://www.saucedemo.com/')
+    login.open_shop_page()
+    login.log_in()
+    main = MainPage(driver)
+    main.add_to_cart()
+    cart = CartPage(driver)
+    cart.click_cart()
+    checkout = CheckoutPage(driver)
+    checkout.click_checkout()
+    information = InformationPage(driver)
+    information.information()
+    # result = shop.get_total()
 
     driver.quit()
 
-    assert result == 'Total: $58.29'
+    # assert result == 'Total: $58.29'

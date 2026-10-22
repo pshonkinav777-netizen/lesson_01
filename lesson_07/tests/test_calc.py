@@ -1,11 +1,11 @@
-from pages.calc_page import PageObject
+from pages.calc_page import CalculatorPage
 from selenium import webdriver
 
 
 def test_calculator():
     driver = webdriver.Chrome()
     driver.maximize_window()
-    calculator = PageObject(
+    calculator = CalculatorPage(
         driver, url='https://bonigarcia.dev/selenium-webdriver-java'
         '/slow-calculator.html')
     calculator.open_calc_page()

@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class PageObject:
+class CalculatorPage:
     INPUT_FIELD = (By.ID, 'delay')
     BUTTON_7 = (By.XPATH, "//span[text()='7']")
     BUTTON_SUM = (By.XPATH, "//span[text()='+']")
