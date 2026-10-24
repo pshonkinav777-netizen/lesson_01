@@ -13,7 +13,8 @@ def test_shop():
     driver.delete_all_cookies()
     login = LoginPage(driver, url='https://www.saucedemo.com/')
     login.open_shop_page()
-    login.log_in()
+    login.log_in("standard_user", "secret_sauce")
+    # login.log_in()
     main = MainPage(driver)
     main.add_to_cart()
     cart = CartPage(driver)
@@ -21,9 +22,9 @@ def test_shop():
     checkout = CheckoutPage(driver)
     checkout.click_checkout()
     information = InformationPage(driver)
-    information.information()
-    # result = shop.get_total()
+    information.information('Alex', 'P', '123123')
+    result = information.get_total()
 
     driver.quit()
 
-    # assert result == 'Total: $58.29'
+    assert result == 'Total: $58.29'
