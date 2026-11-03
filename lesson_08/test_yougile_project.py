@@ -8,7 +8,7 @@ base_url = 'https://ru.yougile.com/api-v2'
 
 def test_create_project():
     api = YougileApi(base_url)
-    api.get_company_id()
+    # api.get_company_id()
     token = api.get_token()
     user_id = api.get_user_id()
     department = api.get_departments_id()
@@ -39,7 +39,7 @@ def test_create_project():
 # Негативный тест с отправкой пустого значения в "title"
 def test_create_project_negative():
     api = YougileApi(base_url,)
-    api.get_company_id()
+    # api.get_company_id()
     token = api.get_token()
     user_id = api.get_user_id()
     department = api.get_departments_id()

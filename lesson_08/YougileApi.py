@@ -14,7 +14,7 @@ class YougileApi:
 
     def __init__(self, url):
         self.url = url
-        self.token = None
+        self.token = os.getenv('YOUGILE_TOKEN')
 
     def get_company_id(self):
         base_url = 'https://ru.yougile.com/api-v2'
@@ -35,7 +35,7 @@ class YougileApi:
         company_id = self.get_company_id()
         body = {
             "login": self.email,
-            "password": "topsecret09041988",
+            "password": self.password,
             "companyId": company_id
             }
         resp = requests.post(self.url + '/auth/keys', json=body)
