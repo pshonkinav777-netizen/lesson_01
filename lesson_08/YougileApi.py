@@ -132,3 +132,33 @@ class YougileApi:
         assert change_project_id is not None
         assert resp.status_code == 200
         return change_project_id
+    
+    def delete_project(self):
+        # token = self.get_token()
+        user_id = self.get_user_id()
+        department = self.get_departments_id()
+        project_id = self.get_project_id()
+        my_headers = {
+            'Content-type': 'application/json',
+            'Authorization': f'Bearer {self.token}'
+            }
+        body = {
+                "deleted": False,
+                "title": "Luna",
+                "users": {
+                    user_id: "worker"
+                },
+                "departments": {
+                    department: {
+                        "manager": "admin",
+                        "member": "worker"
+                    }
+                },
+            }
+        resp = requests.put(f'{self.url}/projects/{project_id}',
+                            headers=my_headers, json=body)
+        print(resp.json())
+        change_project_id = resp.json()["id"]
+        assert change_project_id is not None
+        assert resp.status_code == 200
+        return change_project_id

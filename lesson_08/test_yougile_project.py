@@ -1,8 +1,6 @@
 import pytest
 import requests
 from YougileApi import YougileApi
-
-
 base_url = 'https://ru.yougile.com/api-v2'
 
 
@@ -34,11 +32,13 @@ def test_create_project():
     project_id = resp.json()["id"]
     assert project_id is not None
     assert resp.status_code == 201
+    requests.put(f'{base_url}/projects/{project_id}',
+                 headers=my_headers, json={"deleted": True})
 
 
 # Негативный тест с отправкой пустого значения в "title"
 def test_create_project_negative():
-    api = YougileApi(base_url,)
+    api = YougileApi(base_url)
     # api.get_company_id()
     token = api.get_token()
     user_id = api.get_user_id()
@@ -62,8 +62,8 @@ def test_create_project_negative():
         "idempotencyKey": idempotency}
     resp = requests.post(base_url + '/projects', headers=my_headers, json=body)
     print(resp.json())
-    # project_id = resp.json()["id"]
-    # assert project_id is not None
+    project_id = resp.json()["message"][0]
+    assert project_id == 'title should not be empty'
     assert resp.status_code == 400
 
 
@@ -128,6 +128,8 @@ def test_change_project_negative():
     change_project_id = resp.json()["message"]
     assert change_project_id == 'Отдел не найден: 111'
     assert resp.status_code == 400
+    requests.put(f'{base_url}/projects/{project_id}', 
+                 headers=my_headers, json={"deleted": True})
 
 
 def test_get_by_id():
