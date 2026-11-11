@@ -28,7 +28,8 @@ class LoginPage:
         with allure.step("Удаление куки"):
             self.driver.delete_all_cookies()
 
-    @allure.step("Авторизация пользователя")
+    @allure.step(
+            "Авторизация пользователя заполняет поля {username} и {password}")
     def log_in(self, username, password):
         """
         Позволяет авторизироваться
@@ -133,7 +134,7 @@ class InformationPage:
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
 
-    @allure.step("Заполняет поля Имя, Фамилия и Индекс")
+    @allure.step("Заполняет поля {firstname}, {lastname} и {zipcode}")
     def information(self, firstname, lastname, zipcode):
         """
         Заполняет информацию о покупателе Имя, Фамилия, Индекс
