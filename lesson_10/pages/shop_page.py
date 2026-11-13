@@ -19,9 +19,11 @@ class LoginPage:
         self.wait = WebDriverWait(self.driver, 10)
 
     @allure.step("Открытие страницы магазина")
-    def open_shop_page(self):
+    def open_shop_page(self) -> None:
         """
-        Открывает страницу магазина
+        Открывает страницу магазина и удаляет все куки.
+
+        :return: None, так как метод ничего не возвращает.
         """
         with allure.step("Переход на страницу магазина"):
             self.driver.get('https://www.saucedemo.com/')
@@ -30,9 +32,14 @@ class LoginPage:
 
     @allure.step(
             "Авторизация пользователя заполняет поля {username} и {password}")
-    def log_in(self, username, password):
+    def log_in(self, username: str, password: str) -> None:
         """
-        Позволяет авторизироваться
+        Позволяет авторизироваться с помощью указанных
+        имени пользователя и пароля.
+
+        :param username: Имя пользователя, строка.
+        :param password: Пароль пользователя, строка.
+        :return: None, так как метод ничего не возвращает.
         """
         with allure.step("Вводит имя в поле Username"):
             self.driver.find_element(By.ID, "user-name").send_keys(username)
@@ -58,9 +65,11 @@ class MainPage:
         self.wait = WebDriverWait(self.driver, 10)
 
     @allure.step("Добавление товаров в корзину")
-    def add_to_cart(self):
+    def add_to_cart(self) -> None:
         """
-        Добавляет товары в корзину
+        Добавляет указанные элементы в корзину: рюкзак, футболку и комбинезон.
+
+        :return: None, так как метод ничего не возвращает.
         """
         with allure.step("Добавляет элемент backpack в корзину"):
             add_backpack = self.wait.until(EC.element_to_be_clickable(
@@ -88,9 +97,11 @@ class CartPage:
         self.wait = WebDriverWait(self.driver, 10)
 
     @allure.step("Переход на страницу корзины")
-    def click_cart(self):
+    def click_cart(self) -> None:
         """
-        Кликает на кнопку перехода на страницу корзины
+        Кликает на кнопку перехода на страницу корзины.
+
+        :return: None, так как метод ничего не возвращает.
         """
         cart = self.wait.until(EC.element_to_be_clickable(
             self.CART))
@@ -110,9 +121,11 @@ class CheckoutPage:
         self.wait = WebDriverWait(self.driver, 10)
 
     @allure.step("Подтверждает покупку товаров кликом на checkout_button ")
-    def click_checkout(self):
+    def click_checkout(self) -> None:
         """
-        Подтверждает покупку товаров кликом на checkout_button
+        Подтверждает покупку товаров, кликая на кнопку checkout.
+
+        :return: None, так как метод ничего не возвращает.
         """
         checkout_button = self.wait.until(EC.element_to_be_clickable(
             self.CHECKOUT_BUTTON))
@@ -135,9 +148,15 @@ class InformationPage:
         self.wait = WebDriverWait(self.driver, 10)
 
     @allure.step("Заполняет поля {firstname}, {lastname} и {zipcode}")
-    def information(self, firstname, lastname, zipcode):
+    def information(self, firstname: str, lastname: str, zipcode: str) -> str:
         """
-        Заполняет информацию о покупателе Имя, Фамилия, Индекс
+        Заполняет информацию о покупателе: Имя, Фамилия и Индекс.
+        Возвращает строку с подтверждением успешного выполнения.
+
+        :param firstname: Имя покупателя, строка.
+        :param lastname: Фамилия покупателя, строка.
+        :param zipcode: Почтовый индекс покупателя, строка.
+        :return: Строка, подтверждающая успешное заполнение информации.
         """
         with allure.step("Заполняет поле Имя"):
             self.wait.until(EC.presence_of_element_located(
@@ -156,9 +175,13 @@ class InformationPage:
                 "window.scrollTo(0, document.body.scrollHeight);")
 
     @allure.step("Получает и сравнивает итоговый результат")
-    def get_total(self):
+    def get_total(self) -> str:
         """
-        Получает итоговую сумму и сравнивает ее с появившейся на странице"""
+        Получает итоговую сумму с страницы и возвращает её в виде строки.
+
+        :return: Итоговая сумма в виде строки,
+        полученная с элемента на странице.
+        """
         total_text = self.wait.until(EC.presence_of_element_located(
                 (By.CLASS_NAME, "summary_total_label")))
         total_result = total_text.text
